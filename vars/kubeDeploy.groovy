@@ -1,9 +1,9 @@
 #!/usr/bin/groovy
 
-def call(String imageName, String imageTag, String environment) {
+def call(String imageName, String imageRepo, String imageTag, String environment) {
   node('kubernetes') {
     container("kubectl") {
-      sh "kubectl set image deployment/${name}-${environment}-deployment ${name}=${name-app}:${imageTag}"
+      sh "kubectl set image deployment/${name}-${environment}-deployment ${name}-app=${imageRepo}/${name}:${imageTag}"
     }
   }
 }
