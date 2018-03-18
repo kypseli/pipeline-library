@@ -3,7 +3,7 @@
 def call(String imageName, String imageRepo, String imageTag, String environment) {
   node('dind') {
     container("kubectl") {
-      sh "kubectl set image deployment/${name}-${environment}-deployment ${name}-app=${imageRepo}/${name}:${imageTag}"
+      sh "kubectl set image deployment/${name} ${name}-app=${imageRepo}/${name}:${imageTag}"
     }
   }
 }
