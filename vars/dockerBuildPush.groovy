@@ -4,4 +4,5 @@ def call(org, name, tag, dir, pushCredId) {
     withDockerRegistry(registry: [credentialsId: "$pushCredId"]) { 
         sh "docker push $org/$name:$tag"
     }
+    publishEvent generic("$org/$name") 
 }
