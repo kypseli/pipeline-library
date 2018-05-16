@@ -1,5 +1,4 @@
-import org.kypseli.util.DockerBuildPush
-
+// vars/dockerBuildPush.groovy
 def call(name, tag) {
     def label = "kaniko-${UUID.randomUUID().toString()}"
     podTemplate(name: 'kaniko', label: label, namespace: 'kaniko', yaml: """
