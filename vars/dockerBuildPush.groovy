@@ -27,8 +27,8 @@ def call(name, tag) {
      """
     ) {
       node(label) {
-        steps.container('kaniko') {
-          steps.sh "/kaniko/executor -c . --destination=beedemo/${name}:${tag}"
+        container('kaniko') {
+          sh "/kaniko/executor -c . --destination=beedemo/${name}:${tag}"
         }
       }
     }
