@@ -2,7 +2,7 @@ import org.kypseli.util.DockerBuildPush
 
 def call(name, tag) {
     def label = "kaniko-${UUID.randomUUID().toString()}"
-    podTemplate(name: 'kaniko', label: label, yaml: """
+    podTemplate(name: 'kaniko', label: label, namespace: 'kaniko', yaml: """
      kind: Pod
      metadata:
        name: kaniko
