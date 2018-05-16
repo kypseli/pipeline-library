@@ -2,14 +2,14 @@ package org.kypseli.util
 
 class DockerBuildPush implements Serializable {
 
-  def script
+  def steps
   
-  def DockerBuildPush(script) {
-    this.script = script
+  def DockerBuildPush(steps) {
+    this.steps = steps
   }
   
   def buildPush(name, tag) {
-    script.podTemplate(name: 'kaniko', label: label, yaml: """
+    steps.podTemplate(name: 'kaniko', label: label, yaml: """
      kind: Pod
      metadata:
        name: kaniko
@@ -33,9 +33,9 @@ class DockerBuildPush implements Serializable {
                path: config.json
      """
     ) {
-      this.node(label) {
-        this.container('kaniko') {
-          this.sh "/kaniko/executor -c . --destination=beedemo/${name}:${tag}"
+      steps.node(label) {
+        steps.container('kaniko') {
+          steps.sh "/kaniko/executor -c . --destination=beedemo/${name}:${tag}"
         }
       }
     }
