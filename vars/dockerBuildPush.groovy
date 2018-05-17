@@ -8,7 +8,7 @@ def call(String name, String tag, Closure body) {
      spec:
        containers:
        - name: kaniko
-         image: csanchez/kaniko:jenkins # we need a patched version of kaniko for now
+         image: beedemo/kaniko:jenkins-k8s-1 # we need a patched version of kaniko for now
          imagePullPolicy: Always
          command:
          - cat
