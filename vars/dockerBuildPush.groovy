@@ -8,7 +8,7 @@ def call(String name, String tag, String target = ".", Closure body) {
      spec:
        containers:
        - name: kaniko
-         image: beedemo/kaniko:jenkins-k8s-5
+         image: beedemo/kaniko:jenkins-k8s-6
          imagePullPolicy: Always
          command:
          - /busybox/sh
