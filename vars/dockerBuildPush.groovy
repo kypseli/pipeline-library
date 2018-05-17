@@ -8,10 +8,10 @@ def call(String name, String tag, String target = ".", Closure body) {
      spec:
        containers:
        - name: kaniko
-         image: gcr.io/kaniko-project/executor:debug
+         image: beedemo/kaniko:jenkins-k8s-4
          imagePullPolicy: Always
          command:
-         - /busybox/sh
+         - cat
          tty: true
          volumeMounts:
            - name: jenkins-docker-cfg
@@ -28,12 +28,9 @@ def call(String name, String tag, String target = ".", Closure body) {
       node(label) {
         body()
         container('kaniko') {
-          sh "#!/busybox/sh \n" +
-              'cp target/* /kaniko'
-          sh "#!/busybox/sh \n" +
-              'ls -la /kaniko'
-          sh "#!/busybox/sh \n" +
-              "/kaniko/executor -f Dockerfile -c /kaniko -d beedemo/${name}:${tag}"
+          sh 'cp target/* /root'
+          sh 'ls -la /root'
+          sh "/kaniko/executor -f Dockerfile -c /root -d beedemo/${name}:${tag}"
         }
       }
     }
