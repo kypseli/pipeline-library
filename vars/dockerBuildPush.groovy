@@ -28,7 +28,7 @@ def call(String name, String tag, String target = ".", Closure body) {
       node(label) {
         body()
         container('kaniko') {
-          sh 'cd ${target} && ls -la'
+          sh "cd ${target} && ls -la"
           sh "cd ${target} && /kaniko/executor -c . --destination=beedemo/${name}:${tag}"
         }
       }
