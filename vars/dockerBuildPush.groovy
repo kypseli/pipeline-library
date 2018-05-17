@@ -27,6 +27,7 @@ def call(String name, String tag, String target = ".") {
     ) {
       node(label) {
         container('kaniko') {
+          sh 'ls -la'
           sh "/kaniko/executor -c ${target} --destination=beedemo/${name}:${tag}"
         }
       }
