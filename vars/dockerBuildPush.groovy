@@ -1,5 +1,5 @@
 // vars/dockerBuildPush.groovy
-def call(String name, String tag, Closure body) {
+def call(String name, String tag, String target, Closure body) {
     def label = "kaniko-${UUID.randomUUID().toString()}"
     podTemplate(name: 'kaniko', label: label, namespace: 'kaniko', yaml: """
      kind: Pod
@@ -28,7 +28,7 @@ def call(String name, String tag, Closure body) {
       node(label) {
         container('kaniko') {
           body()
-          sh "/kaniko/executor -c . --destination=beedemo/${name}:${tag}"
+          sh "/kaniko/executor -c ${target} --destination=beedemo/${name}:${tag}"
         }
       }
     }
