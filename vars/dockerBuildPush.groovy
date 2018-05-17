@@ -28,9 +28,12 @@ def call(String name, String tag, String target = ".", Closure body) {
       node(label) {
         body()
         container('kaniko') {
-          sh 'cp target/* /kaniko'
-          sh 'ls -la /kaniko'
-          sh "/kaniko/executor -f Dockerfile -c /kaniko -d beedemo/${name}:${tag}"
+          sh "#!/busybox/sh \n" +
+              'cp target/* /kaniko'
+          sh "#!/busybox/sh \n" +
+              'ls -la /kaniko'
+          sh "#!/busybox/sh \n" +
+              "/kaniko/executor -f Dockerfile -c /kaniko -d beedemo/${name}:${tag}"
         }
       }
     }
