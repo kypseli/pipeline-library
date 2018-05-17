@@ -8,10 +8,10 @@ def call(String name, String tag, String target = ".", Closure body) {
      spec:
        containers:
        - name: kaniko
-         image: beedemo/kaniko:jenkins-k8s-4
+         image: beedemo/kaniko:jenkins-k8s-5
          imagePullPolicy: Always
          command:
-         - cat
+         - /busybox/sh
          tty: true
          volumeMounts:
            - name: jenkins-docker-cfg
