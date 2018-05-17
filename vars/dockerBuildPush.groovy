@@ -28,7 +28,6 @@ def call(String name, String tag, String target = ".", Closure body) {
       node(label) {
         container('kaniko') {
           body()
-          sh 'ls -la'
           sh 'cp target/* /kaniko'
           sh 'ls -la /kaniko'
           sh "/kaniko/executor -f Dockerfile -c /kaniko -d beedemo/${name}:${tag}"
