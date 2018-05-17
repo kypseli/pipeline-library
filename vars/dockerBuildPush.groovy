@@ -11,7 +11,7 @@ def call(String name, String tag, String target = ".", Closure body) {
          image: beedemo/kaniko:jenkins-k8s-6
          imagePullPolicy: Always
          command:
-         - /busybox/sh
+         - cat
          tty: true
          volumeMounts:
            - name: jenkins-docker-cfg
