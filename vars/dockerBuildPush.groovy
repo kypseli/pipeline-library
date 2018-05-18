@@ -1,36 +1,23 @@
 // vars/dockerBuildPush.groovy
 def call(String name, String tag, String target = ".", Closure body) {
-    def label = "kaniko-${UUID.randomUUID().toString()}"
-    podTemplate(name: 'kaniko', label: label, namespace: 'kaniko', yaml: """
+    def label = "kubectl-${UUID.randomUUID().toString()}"
+    podTemplate(name: 'kubectl', label: label, namespace: 'kaniko', yaml: """
      kind: Pod
      metadata:
-       name: kaniko
+       name: kubectl
      spec:
        containers:
-       - name: kaniko
-         image: beedemo/kaniko:jenkins-k8s-7
-         imagePullPolicy: Always
+       - name: kubectl
+         image: lachlanevenson/k8s-kubectl:v1.9.3
          command:
          - cat
          tty: true
-         volumeMounts:
-           - name: jenkins-docker-cfg
-             mountPath: /root/.docker
-       volumes:
-         - name: jenkins-docker-cfg
-           secret:
-             secretName: jenkins-docker-cfg
-             items:
-             - key: .dockerconfigjson
-               path: config.json
      """
     ) {
       node(label) {
-        container('kaniko') {
+        container('kubectl') {
           body()
-          sh 'cp target/* /kaniko'
-          sh 'ls -la /kaniko'
-          sh "/kaniko/executor -f Dockerfile -c /kaniko -d beedemo/${name}:${tag}"
+          sh 'kubectl get pods'
         }
       }
     }
