@@ -13,14 +13,17 @@ def call(String name, String tag, String target = ".", Closure body) {
          - cat
          tty: true
          volumeMounts:
-          - name: podinfo
-            mountPath: /etc/podinfo
-            readOnly: false
+           - name: podinfo
+             mountPath: /etc/podinfo
+             readOnly: false
        - name: kaniko
          image: gcr.io/kaniko-project/executor:debug
          command:
          - /busybox/sh
          tty: true
+         volumeMounts:
+           - name: jenkins-docker-cfg
+             mountPath: /root/.docker
        volumes:
          - name: podinfo
            downwardAPI:
@@ -28,6 +31,12 @@ def call(String name, String tag, String target = ".", Closure body) {
                - path: "name"
                  fieldRef:
                    fieldPath: metadata.name
+         - name: jenkins-docker-cfg
+           secret:
+             secretName: jenkins-docker-cfg
+             items:
+             - key: .dockerconfigjson
+               path: config.json
        serviceAccountName: kaniko
 """
     ) {
@@ -35,7 +44,7 @@ def call(String name, String tag, String target = ".", Closure body) {
         container('kubectl') {
           body()
             def podName = sh returnStdout: true, script: "cat /etc/podinfo/name"
-            sh "kubectl describe pods/${podName}"
+            sh "kubectl exec ${podName} -c kaniko /kaniko/executor"
         }
       }
     }
