@@ -18,12 +18,24 @@ def call(String name, String tag, String target = ".", Closure body) {
          command:
          - /busybox/sh
          tty: true
+         volumeMounts:
+          - name: podinfo
+            mountPath: /etc/podinfo
+            readOnly: false
+        volumes:
+          - name: podinfo
+            downwardAPI:
+              items:
+                - path: "name"
+                  fieldRef:
+                    fieldPath: metadata.name
      """
     ) {
       node(label) {
         container('kubectl') {
           body()
             sh "kubectl describe pods/kaniko"
+            sh "cat /etc/podinfo/name"
         }
       }
     }
