@@ -49,7 +49,7 @@ def call(String name, String tag, String target = ".", Closure body) {
           def podName = sh returnStdout: true, script: "cat /etc/podinfo/name"
           sh "kubectl cp ./context ${podName}:/ -c kaniko"
           sh "kubectl exec ${podName} -c kaniko -- ls -la /"
-          sh "kubectl exec ${podName} -c kaniko -- /kaniko/executor -c / -d ${name}:${tag}"
+          sh "kubectl exec ${podName} -c kaniko -- /kaniko/executor -c /${target} -d ${name}:${tag}"
         }
       }
     }
