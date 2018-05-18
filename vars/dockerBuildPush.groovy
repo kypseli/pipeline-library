@@ -4,7 +4,7 @@ def call(String name, String tag, String target = ".", Closure body) {
     podTemplate(name: 'kubectl', label: label, namespace: 'kaniko', yaml: """
      kind: Pod
      metadata:
-       name: kubectl
+       name: ${label}
      spec:
        serviceAccountName: kaniko
        containers:
@@ -13,12 +13,18 @@ def call(String name, String tag, String target = ".", Closure body) {
          command:
          - cat
          tty: true
+       containers:
+       - name: kaniko
+         image: gcr.io/kaniko-project/executor:debug
+         command:
+         - /busybox/sh
+         tty: true
      """
     ) {
       node(label) {
         container('kubectl') {
           body()
-          sh 'kubectl get pods'
+            sh "kubectl describe pods/${label}"
         }
       }
     }
