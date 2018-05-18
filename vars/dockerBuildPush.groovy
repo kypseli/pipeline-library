@@ -17,9 +17,9 @@ def call(String name, String tag, String target = ".", Closure body) {
              mountPath: /etc/podinfo
              readOnly: false
        - name: kaniko
-         image: gcr.io/kaniko-project/executor:debug
+         image: gcr.io/kaniko-project/executor:latest
          command:
-         - /busybox/sh
+         - tail -f /dev/null
          tty: true
          volumeMounts:
            - name: jenkins-docker-cfg
@@ -48,7 +48,6 @@ def call(String name, String tag, String target = ".", Closure body) {
           sh 'ls -la context'
           def podName = sh returnStdout: true, script: "cat /etc/podinfo/name"
           sh "kubectl cp ./context ${podName}:/ -c kaniko"
-          sh "kubectl exec ${podName} -c kaniko -- ls -la /"
           sh "kubectl exec ${podName} -c kaniko -- /kaniko/executor -c /${target} -d ${name}:${tag}"
         }
       }
