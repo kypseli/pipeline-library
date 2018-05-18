@@ -1,5 +1,5 @@
 // vars/dockerBuildPush.groovy
-def call(String name, String tag, String target = ".", Closure body) {
+def call(String name, String tag, String target = ".", String dockerFile="Dockerfile", Closure body) {
     def label = "kubectl-${UUID.randomUUID().toString()}"
     podTemplate(name: 'kubectl', label: label, namespace: 'kaniko', yaml: """
      kind: Pod
@@ -48,7 +48,7 @@ def call(String name, String tag, String target = ".", Closure body) {
           sh 'ls -la context'
           def podName = sh returnStdout: true, script: "cat /etc/podinfo/name"
           sh "kubectl cp ./context ${podName}:/ -c kaniko"
-          sh "kubectl exec ${podName} -c kaniko -- /kaniko/executor -c /${target} -d ${name}:${tag}"
+            sh "kubectl exec ${podName} -c kaniko -- /kaniko/executor -f ${dockerFile} -c /${target} -d ${name}:${tag}"
         }
       }
     }
