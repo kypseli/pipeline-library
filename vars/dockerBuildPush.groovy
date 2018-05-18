@@ -4,7 +4,7 @@ def call(String name, String tag, String target = ".", Closure body) {
     podTemplate(name: 'kubectl', label: label, namespace: 'kaniko', yaml: """
      kind: Pod
      metadata:
-       name: ${label}
+       name: kaniko
      spec:
        serviceAccountName: kaniko
        containers:
@@ -24,7 +24,7 @@ def call(String name, String tag, String target = ".", Closure body) {
       node(label) {
         container('kubectl') {
           body()
-            sh "kubectl describe pods/${label}"
+            sh "kubectl describe pods/kaniko"
         }
       }
     }
