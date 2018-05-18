@@ -12,15 +12,15 @@ def call(String name, String tag, String target = ".", Closure body) {
          command:
          - cat
          tty: true
+         volumeMounts:
+          - name: podinfo
+            mountPath: /etc/podinfo
+            readOnly: false
        - name: kaniko
          image: gcr.io/kaniko-project/executor:debug
          command:
          - /busybox/sh
          tty: true
-         volumeMounts:
-          - name: podinfo
-            mountPath: /etc/podinfo
-            readOnly: false
        volumes:
          - name: podinfo
            downwardAPI:
