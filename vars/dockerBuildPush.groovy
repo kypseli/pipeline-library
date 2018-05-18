@@ -6,7 +6,6 @@ def call(String name, String tag, String target = ".", Closure body) {
      metadata:
        name: kaniko
      spec:
-       serviceAccountName: kaniko
        containers:
        - name: kubectl
          image: lachlanevenson/k8s-kubectl:v1.9.3
@@ -22,14 +21,15 @@ def call(String name, String tag, String target = ".", Closure body) {
           - name: podinfo
             mountPath: /etc/podinfo
             readOnly: false
-        volumes:
-          - name: podinfo
-            downwardAPI:
-              items:
-                - path: "name"
-                  fieldRef:
-                    fieldPath: metadata.name
-     """
+       volumes:
+         - name: podinfo
+           downwardAPI:
+             items:
+               - path: "name"
+                 fieldRef:
+                   fieldPath: metadata.name
+       serviceAccountName: kaniko
+"""
     ) {
       node(label) {
         container('kubectl') {
