@@ -6,7 +6,7 @@ def call(String name, String tag, String target = ".", Closure body) {
      metadata:
        name: kubectl
      spec:
-       serviceAccountName: jenkins
+       serviceAccountName: kaniko
        containers:
        - name: kubectl
          image: lachlanevenson/k8s-kubectl:v1.9.3
