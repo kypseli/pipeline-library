@@ -18,10 +18,10 @@ def call(String name, String tag, String target = ".", Closure body) {
            command:
            - /busybox/sh
            tty: true
-         volumeMounts:
-          - name: podinfo
-            mountPath: /etc/podinfo
-            readOnly: false
+           volumeMounts:
+            - name: podinfo
+              mountPath: /etc/podinfo
+              readOnly: false
         volumes:
           - name: podinfo
             downwardAPI:
