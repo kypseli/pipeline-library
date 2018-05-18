@@ -34,7 +34,6 @@ def call(String name, String tag, String target = ".", Closure body) {
       node(label) {
         container('kubectl') {
           body()
-            sh "kubectl describe pods/kaniko"
             sh "cat /etc/podinfo/name"
         }
       }
