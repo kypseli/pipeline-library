@@ -42,9 +42,12 @@ def call(String name, String tag, String target = ".", Closure body) {
     ) {
       node(label) {
         container('kubectl') {
-          body()
+          dir('context') {
+            body()
+          }
+          sh 'ls -la context'
           def podName = sh returnStdout: true, script: "cat /etc/podinfo/name"
-          sh "kubectl cp Dockerfile ${podName}:/Dockerfile -c kaniko"
+          sh "kubectl cp ./context ${podName}:/ -c kaniko"
           sh "kubectl exec ${podName} -c kaniko -- ls -la /"
           sh "kubectl exec ${podName} -c kaniko -- /kaniko/executor -c / -d ${name}:${tag}"
         }
