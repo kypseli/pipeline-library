@@ -17,9 +17,9 @@ def call(String name, String tag, String target = ".", Closure body) {
              mountPath: /etc/podinfo
              readOnly: false
        - name: kaniko
-         image: gcr.io/kaniko-project/executor:latest
+         image: gcr.io/kaniko-project/executor:debug-v0.1.0
          command:
-         - tail -f /dev/null
+         - /busybox/sh
          tty: true
          volumeMounts:
            - name: jenkins-docker-cfg
