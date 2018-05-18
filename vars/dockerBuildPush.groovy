@@ -43,8 +43,9 @@ def call(String name, String tag, String target = ".", Closure body) {
       node(label) {
         container('kubectl') {
           body()
-            def podName = sh returnStdout: true, script: "cat /etc/podinfo/name"
-            sh "kubectl exec ${podName} -c kaniko /kaniko/executor"
+          def podName = sh returnStdout: true, script: "cat /etc/podinfo/name"
+          sh "kubectl cp Dockerfile ${podName}:/workspace/ -c kaniko"
+          sh "kubectl exec ${podName} -c kaniko /kaniko/executor -d ${name}:${tag}"
         }
       }
     }
