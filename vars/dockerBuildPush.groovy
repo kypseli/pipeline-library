@@ -18,7 +18,7 @@ def call(String name, String tag, String target = ".", Closure body) {
          image: gcr.io/kaniko-project/executor:debug
          command:
          - /busybox/sh
-         tty: true
+         tty: false
      """
     ) {
       node(label) {
