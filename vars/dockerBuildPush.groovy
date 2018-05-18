@@ -13,12 +13,11 @@ def call(String name, String tag, String target = ".", Closure body) {
          command:
          - cat
          tty: true
-       containers:
        - name: kaniko
          image: gcr.io/kaniko-project/executor:debug
          command:
          - /busybox/sh
-         tty: false
+         tty: true
      """
     ) {
       node(label) {
