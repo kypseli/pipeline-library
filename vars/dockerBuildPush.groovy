@@ -17,7 +17,7 @@ def call(String name, String tag, String target = ".", String dockerFile="Docker
              mountPath: /etc/podinfo
              readOnly: false
        - name: kaniko
-         image: gcr.io/kaniko-project/executor:debug-v0.1.0
+         image: gcr.io/kaniko-project/executor:debug-v0.2.0
          command:
          - /busybox/sh
          tty: true
