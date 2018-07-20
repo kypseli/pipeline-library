@@ -20,9 +20,9 @@ def call(String name, String tag, String target = ".", String dockerFile="Docker
          projected:
            sources:
            - secret:
-               name: regcred2
+               name: jenkins-docker-cfg
                items:
-                 - key: .dockercfg
+                 - key: .dockerconfigjson
                    path: config.json
        serviceAccountName: kaniko
 """
