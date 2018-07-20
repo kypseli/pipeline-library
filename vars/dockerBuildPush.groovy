@@ -30,6 +30,7 @@ def call(String name, String tag, String target = ".", String dockerFile="Docker
       node(label) {
         container(name: 'kaniko', shell: '/busybox/sh') {
           body()
+          sleep 60
           sh """#!/busybox/sh
             /kaniko/executor -f ${dockerFile} -c ./ -d ${name}:${tag}
           """
