@@ -32,8 +32,9 @@ def call(String name, String tag, String target = ".", String dockerFile="Docker
           dir('context') {
             body()
           }
+          sh '#!/busybox/sh ls -la context'
           sh """#!/busybox/sh
-            /kaniko/executor -f ${dockerFile} -c /${target} -d ${name}:${tag}
+            /kaniko/executor -f ${dockerFile} -c /context -d ${name}:${tag}
           """
         }
       }
