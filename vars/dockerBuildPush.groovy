@@ -1,7 +1,7 @@
 // vars/dockerBuildPush.groovy
 def call(String name, String tag, String target = ".", String dockerFile="Dockerfile", Closure body) {
-    def label = "kubectl-${UUID.randomUUID().toString()}"
-    podTemplate(name: 'kubectl', label: label, namespace: 'kaniko', yaml: """
+    def label = "kaniko-${UUID.randomUUID().toString()}"
+    podTemplate(name: 'kaniko', label: label, namespace: 'kaniko', yaml: """
      kind: Pod
      metadata:
        name: kaniko
@@ -16,12 +16,14 @@ def call(String name, String tag, String target = ".", String dockerFile="Docker
            - name: jenkins-docker-cfg
              mountPath: /root
        volumes:
-         - name: jenkins-docker-cfg
-           secret:
-             name: regcred
-             items:
-             - key: .dockerconfigjson
-               path: config.json
+       - name: jenkins-docker-cfg
+         projected:
+           sources:
+          - secret:
+              name: regcred
+              items:
+                - key: .dockerconfigjson
+                  path: .docker/config.json
        serviceAccountName: kaniko
 """
     ) {
