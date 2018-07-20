@@ -14,7 +14,7 @@ def call(String name, String tag, String target = ".", String dockerFile="Docker
          tty: true
          volumeMounts:
            - name: jenkins-docker-cfg
-             mountPath: /root
+             mountPath: /root/.docker
        volumes:
        - name: jenkins-docker-cfg
          projected:
@@ -23,7 +23,7 @@ def call(String name, String tag, String target = ".", String dockerFile="Docker
                name: regcred2
                items:
                  - key: .dockercfg
-                   path: .docker/config.json
+                   path: config.json
        serviceAccountName: kaniko
 """
     ) {
