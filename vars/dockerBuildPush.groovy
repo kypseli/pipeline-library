@@ -26,14 +26,13 @@ def call(String name, String tag, String target = ".", String dockerFile="Docker
 """
     ) {
       node(label) {
-        container('kubectl') {
+        container(name: 'kaniko', shell: '/busybox/sh') {
           dir('context') {
             body()
           }
-          sh 'ls -la context'
-          def podName = sh returnStdout: true, script: "cat /etc/podinfo/name"
-          sh "kubectl cp ./context ${podName}:/ -c kaniko"
-            sh "kubectl exec ${podName} -c kaniko -- /kaniko/executor -v debug -f ${dockerFile} -c /${target} -d ${name}:${tag}"
+          sh """#!/busybox/sh
+            /kaniko/executor -f ${dockerFile} -c /${target} -d ${name}:${tag}
+          """
         }
       }
     }
