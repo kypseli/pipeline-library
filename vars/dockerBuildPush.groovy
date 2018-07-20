@@ -8,7 +8,7 @@ def call(String name, String tag, String target = ".", String dockerFile="Docker
      spec:
        containers:
        - name: kaniko
-         image: gcr.io/kaniko-project/executor:debug-v0.2.0
+         image: gcr.io/kaniko-project/executor:debug
          command:
          - /busybox/cat
          tty: true
@@ -30,7 +30,6 @@ def call(String name, String tag, String target = ".", String dockerFile="Docker
       node(label) {
         container(name: 'kaniko', shell: '/busybox/sh') {
           body()
-          sleep 240
           sh """#!/busybox/sh
             /kaniko/executor -f ${pwd()}/${dockerFile} -c ${pwd()} -d ${name}:${tag}
           """
