@@ -7,33 +7,18 @@ def call(String name, String tag, String target = ".", String dockerFile="Docker
        name: kaniko
      spec:
        containers:
-       - name: kubectl
-         image: lachlanevenson/k8s-kubectl:v1.9.3
-         command:
-         - cat
-         tty: true
-         volumeMounts:
-           - name: podinfo
-             mountPath: /etc/podinfo
-             readOnly: false
        - name: kaniko
          image: gcr.io/kaniko-project/executor:debug-v0.2.0
          command:
-         - /busybox/sh
+         - /busybox/cat
          tty: true
          volumeMounts:
            - name: jenkins-docker-cfg
-             mountPath: /root/.docker
+             mountPath: /root
        volumes:
-         - name: podinfo
-           downwardAPI:
-             items:
-               - path: "name"
-                 fieldRef:
-                   fieldPath: metadata.name
          - name: jenkins-docker-cfg
            secret:
-             secretName: jenkins-docker-cfg
+             name: regcred
              items:
              - key: .dockerconfigjson
                path: config.json
