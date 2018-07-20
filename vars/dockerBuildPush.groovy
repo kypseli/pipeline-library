@@ -20,7 +20,7 @@ def call(String name, String tag, String target = ".", String dockerFile="Docker
          projected:
            sources:
            - secret:
-               name: regcred
+               name: regcred2
                items:
                  - key: .dockercfg
                    path: .docker/config.json
