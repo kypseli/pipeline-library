@@ -29,12 +29,10 @@ def call(String name, String tag, String target = ".", String dockerFile="Docker
     ) {
       node(label) {
         container(name: 'kaniko', shell: '/busybox/sh') {
-          dir('context') {
-            body()
-          }
+          body()
           sh '#!/busybox/sh ls -la context'
           sh """#!/busybox/sh
-            /kaniko/executor -f ${dockerFile} -c /context -d ${name}:${tag}
+            /kaniko/executor -f ${dockerFile} -c ./ -d ${name}:${tag}
           """
         }
       }
