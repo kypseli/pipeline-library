@@ -22,7 +22,7 @@ def call(String name, String tag, String target = ".", String dockerFile="Docker
            - secret:
                name: regcred
                items:
-                 - key: .dockerconfigjson
+                 - key: .dockercfg
                    path: .docker/config.json
        serviceAccountName: kaniko
 """
