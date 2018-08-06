@@ -8,7 +8,7 @@ def call(String name, String tag, String target = ".", String dockerFile="Docker
      spec:
        containers:
        - name: kaniko
-         image: gcr.io/kaniko-project/executor:debug
+         image: gcr.io/kaniko-project/executor:debug-v0.3.0
          command:
          - /busybox/cat
          tty: true
