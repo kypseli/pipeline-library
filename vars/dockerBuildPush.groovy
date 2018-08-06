@@ -32,7 +32,7 @@ def call(String name, String tag, String target = ".", String dockerFile="Docker
           body()
           withEnv(['PATH+EXTRA=/busybox']) {
             sh """#!/busybox/sh
-              /kaniko/executor -f ${pwd()}/${dockerFile} -c ${pwd()} -d ${name}:${tag}
+              /kaniko/executor -f ${pwd()}/${dockerFile} -c ${pwd()} -d ${name}:${tag} -d ${name}:latest
             """
           }
         }
