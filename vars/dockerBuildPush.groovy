@@ -13,17 +13,12 @@ def call(String name, String tag, String target = ".", String dockerFile="Docker
          - /busybox/cat
          tty: true
          volumeMounts:
-           - name: jenkins-docker-cfg
+           - name: docker-config
              mountPath: /root/.docker
        volumes:
-       - name: jenkins-docker-cfg
-         projected:
-           sources:
-           - secret:
-               name: jenkins-docker-cfg
-               items:
-                 - key: .dockerconfigjson
-                   path: config.json
+         - name: docker-config
+           configMap:
+             name: docker-config
        serviceAccountName: kaniko
 """
     ) {
