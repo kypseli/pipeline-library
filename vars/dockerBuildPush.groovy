@@ -23,7 +23,7 @@ def call(String name, String tag, String target = ".", String dockerFile="Docker
 """
     ) {
       node(label) {
-        var ecrPrefix = "946759952272.dkr.ecr.us-east-1.amazonaws.com/"
+        def ecrPrefix = "946759952272.dkr.ecr.us-east-1.amazonaws.com/"
         container(name: 'kaniko', shell: '/busybox/sh') {
           body()
           withEnv(['PATH+EXTRA=/busybox:/kaniko']) {
