@@ -25,7 +25,7 @@ def call(String name, String tag, String target = ".", String dockerFile="Docker
       node(label) {
         container(name: 'kaniko', shell: '/busybox/sh') {
           body()
-          withEnv(['PATH+EXTRA=/busybox+EXTRA=/kaniko']) {
+          withEnv(['PATH+EXTRA=/busybox:/kaniko']) {
             sh """#!/busybox/sh
               executor -f ${pwd()}/${dockerFile} -c ${pwd()} -d ${name}:${tag} -d ${name}:latest
             """
