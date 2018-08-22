@@ -14,7 +14,7 @@ def call(String name, String tag, String target = ".", String dockerFile="Docker
          tty: true
          volumeMounts:
            - name: docker-config
-             mountPath: /root/.docker
+             mountPath: /kaniko/.docker
        volumes:
          - name: docker-config
            configMap:
