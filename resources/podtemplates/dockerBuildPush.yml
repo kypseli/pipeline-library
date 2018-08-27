@@ -1,0 +1,18 @@
+     kind: Pod
+     metadata:
+       name: kaniko
+     spec:
+       containers:
+       - name: kaniko
+         image: gcr.io/kaniko-project/executor:debug-v0.3.0
+         command:
+         - /busybox/cat
+         tty: true
+         volumeMounts:
+           - name: docker-config
+             mountPath: /kaniko/.docker
+       volumes:
+         - name: docker-config
+           configMap:
+             name: docker-config
+       serviceAccountName: kaniko
