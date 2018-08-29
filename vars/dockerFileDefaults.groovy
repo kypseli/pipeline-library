@@ -16,7 +16,7 @@ def call(body) {
       tag = props['tag']
       pushBranch = props['pushBranch']
       echo "push non master branch: $pushBranch"
-      stash name: 'everything', includes: '*/*'
+      stash name: 'everything', includes: '**'
     }
     
     if(env.BRANCH_NAME=="master" || pushBranch) {
