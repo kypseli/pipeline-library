@@ -22,7 +22,7 @@ def call(body) {
         stash name: 'everything', includes: '**'
         stage 'Check Repository'
         container('aws-cli') {
-          sh "aws ecr create-repository --repository-name kypselie/${repoName}"
+          sh "aws ecr create-repository --region us-east-1 --repository-name kypselie/${repoName}"
         }
       }
     }
