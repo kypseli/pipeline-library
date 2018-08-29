@@ -6,5 +6,5 @@
        - name: aws-cli
          image: 946759952272.dkr.ecr.us-east-1.amazonaws.com/kypseli/awscli:1.16.3
          command:
-         - /cat
+         - cat
          tty: true
