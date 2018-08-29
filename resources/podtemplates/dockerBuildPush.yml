@@ -4,7 +4,7 @@
      spec:
        containers:
        - name: kaniko
-         image: gcr.io/kaniko-project/executor:debug-latest
+         image: gcr.io/kaniko-project/executor:debug
          resources:
            requests:
              memory: "2Gi"
