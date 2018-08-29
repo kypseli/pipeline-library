@@ -29,7 +29,8 @@ def call(body) {
               error "${errorMsg}"
             }
           } catch(e) {
-            //error other than for RepositoryAlreadyExistsException should have already failed job
+            //error other than for RepositoryAlreadyExistsException
+            throw e
           }
         }
       }
