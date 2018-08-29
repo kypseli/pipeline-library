@@ -29,10 +29,7 @@ def call(body) {
               error "${errorMsg}"
             }
           } catch(e) {
-            //check exception message for RepositoryAlreadyExistsException and ignore
-              if(!errorMsg.contains("RepositoryAlreadyExistsException")) {
-                throw e
-              }
+            //error other than for RepositoryAlreadyExistsException should have already failed job
           }
         }
       }
