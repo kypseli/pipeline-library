@@ -24,11 +24,14 @@ def call(body) {
         container('aws-cli') {
           def errorMsg
           try {
-           errorMsg = sh(returnStdout: true, script: "aws ecr create-repository --region us-east-1 --repository-name kypseli/${repoName} | tr -d '\n'")
+            errorMsg = sh(returnStdout: true, script: "aws ecr create-repository --region us-east-1 --repository-name kypseli/${repoName} | tr -d '\n'")
+            if(!errorMsg.contains("RepositoryAlreadyExistsException")) {
+              error "${errorMsg}"
+            }
           } catch(e) {
             //check exception message for RepositoryAlreadyExistsException and ignore
               if(!errorMsg.contains("RepositoryAlreadyExistsException")) {
-                throw "${errorMsg}"
+                throw e
               }
           }
         }
