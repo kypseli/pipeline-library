@@ -22,12 +22,14 @@ def call(body) {
         stash name: 'everything', includes: '**'
         stage 'Check Repository'
         container('aws-cli') {
+          def errorMsg
           try {
-            sh "aws ecr create-repository --region us-east-1 --repository-name kypseli/${repoName}"
+           errorMsg = sh(returnStdout: true, script: "aws ecr create-repository --region us-east-1 --repository-name kypseli/${repoName}")
           } catch(e) {
             //check exception message for RepositoryAlreadyExistsException and ignore
-            String error = "${e}"
-            echo error
+              if(!errorMsg.contains("RepositoryAlreadyExistsException")) {
+                error "${errorMsg}"
+              }
           }
         }
       }
