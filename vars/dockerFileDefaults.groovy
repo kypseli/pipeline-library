@@ -20,6 +20,7 @@ def call(body) {
     }
     
     if(env.BRANCH_NAME=="master" || pushBranch) {
+      stage 'Image Build and Push'
       dockerBuildPush("${repoName}", "${tag}",'./') {
         unstash 'everything'
       }
