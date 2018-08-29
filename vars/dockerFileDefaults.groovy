@@ -26,9 +26,8 @@ def call(body) {
             sh "aws ecr create-repository --region us-east-1 --repository-name kypseli/${repoName}"
           } catch(e) {
             //check exception message for RepositoryAlreadyExistsException and ignore
-            String error = "${e}";
-            def createError = sh (returnStdout: true, script: "error='${error}'[[\$error =~ .*RepositoryAlreadyExistsException* ]] && echo 'true' || echo 'false'")
-            echo createError
+            String error = "${e}"
+            echo error
           }
         }
       }
