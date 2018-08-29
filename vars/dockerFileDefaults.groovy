@@ -30,7 +30,9 @@ def call(body) {
             }
           } catch(e) {
             //error other than for RepositoryAlreadyExistsException
-            throw e
+            if(!errorMsg.contains("RepositoryAlreadyExistsException")) {
+              throw e
+            }
           }
         }
       }
