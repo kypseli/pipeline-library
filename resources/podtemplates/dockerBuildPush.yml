@@ -5,6 +5,9 @@
        containers:
        - name: kaniko
          image: gcr.io/kaniko-project/executor:debug-v0.3.0
+         resources:
+           requests:
+             memory: "2Gi"
          command:
          - /busybox/cat
          tty: true
