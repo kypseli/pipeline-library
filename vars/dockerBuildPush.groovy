@@ -5,7 +5,7 @@ def call(String name, String tag, String target = ".", String dockerFile="Docker
     podTemplate(name: 'kaniko', label: label, namespace: 'kaniko',  yaml: podYaml) {
       node(label) {
         container('k8s-jnlp') {
-          sh 'ls -la'
+          sh 'ls -la /home/jenkins'
         }
         container(name: 'kaniko', shell: '/busybox/sh') {
           body()
