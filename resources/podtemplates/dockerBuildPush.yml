@@ -14,6 +14,14 @@
          volumeMounts:
            - name: docker-config
              mountPath: /kaniko/.docker
+       - name: k8s-jnlp
+         image: 946759952272.dkr.ecr.us-east-1.amazonaws.com/kypseli/k8s-jnlp-agent:jre8-alpine3.8-5
+         resources:
+           requests:
+             memory: "250Mi"
+         command:
+         - cat
+         tty: true
        volumes:
          - name: docker-config
            configMap:
