@@ -4,6 +4,7 @@ def call(String name, String tag, String target = ".", String dockerFile="Docker
     def podYaml = libraryResource 'podtemplates/dockerBuildPush.yml'
     podTemplate(name: 'kaniko', label: label, namespace: 'kaniko',  yaml: podYaml) {
       node(label) {
+        sh 'ls -la'
         container(name: 'kaniko', shell: '/busybox/sh') {
           body()
           withEnv(['PATH+EXTRA=/busybox:/kaniko']) {
