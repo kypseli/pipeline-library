@@ -7,7 +7,7 @@
                 "tagStatus": "tagged",
                 "tagPrefixList": ["${tag}"],
                 "countType": "sinceImagePushed",
-                "countUnit": "hours",
+                "countUnit": "days",
                 "countNumber": 1
             },
             "action": {
