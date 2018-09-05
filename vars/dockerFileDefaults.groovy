@@ -27,7 +27,9 @@ def call(body) {
           def errorMsg
           if(enableLifecyclePolicy) {
             def lifecyclePolicy = libraryResource 'aws/ecr/lifecycle-policy/tempImagePolicy.json'
-            sh """aws ecr put-lifecycle-policy --region us-east-1 --repository-name kypseli/${repoName} --lifecycle-policy-text '${lifecyclePolicy}'"""
+            writeFile file: 'tempImagePolicy.original.json', text: lifecyclePolicy
+            sh 'envsubst < ./tempImagePolicy.original.json > ./tempImagePolicy.json'
+            sh """aws ecr put-lifecycle-policy --region us-east-1 --repository-name kypseli/${repoName} --lifecycle-policy-text 'file://tempImagePolicy.json'"""
           }
           try {
             errorMsg = sh(returnStdout: true, script: "aws ecr create-repository --region us-east-1 --repository-name kypseli/${repoName} | tr -d '\n'")
