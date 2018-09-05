@@ -4,7 +4,7 @@
      spec:
        containers:
        - name: kaniko
-         image: 946759952272.dkr.ecr.us-east-1.amazonaws.com/kypseli/kaniko:pre-0.4-1
+         image: 946759952272.dkr.ecr.us-east-1.amazonaws.com/kypseli/kaniko:pre-0.4
          resources:
            requests:
              memory: "2Gi"
@@ -14,14 +14,6 @@
          volumeMounts:
            - name: docker-config
              mountPath: /kaniko/.docker
-       - name: k8s-jnlp
-         image: 946759952272.dkr.ecr.us-east-1.amazonaws.com/kypseli/k8s-jnlp-agent:jre8-alpine3.8-10
-         resources:
-           requests:
-             memory: "250Mi"
-         command:
-         - cat
-         tty: true
        volumes:
          - name: docker-config
            configMap:
