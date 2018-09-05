@@ -3,6 +3,7 @@ def call(body) {
     def repoName
     def tag
     def pushBranch
+    def enableLifecyclePolicy
     
     tokens = "${env.JOB_NAME}".tokenize('/')
     repo = tokens[tokens.size()-2]
@@ -13,16 +14,21 @@ def call(body) {
     podTemplate(name: 'aws-cli', label: label, yaml: podYaml) {
       node(label) {
         checkout scm
-        def d = [repo: repo, tag: tag, pushBranch: false]
+        def d = [repo: repo, tag: tag, pushBranch: false, enableLifecyclePolicy: true]
         def props = readProperties defaults: d, file: 'dockerBuildPublish.properties'
         repoName = props['repo']
         tag = props['tag']
         pushBranch = props['pushBranch']
+        enableLifecyclePolicy = props['enableLifecyclePolicy']
         echo "push non master branch: $pushBranch"
         stash name: 'everything', includes: '**'
         stage 'Check Repository'
         container('aws-cli') {
           def errorMsg
+          if(enableLifecyclePolicy) {
+            def lifecyclePolicy = libraryResource 'aws/ecr/lifecycle-policy/tempImagePolicy.json'
+            sh """aws ecr put-lifecycle-policy --region us-east-1 --repository-name kypseli/${repoName} --lifecycle-policy-text '${lifecyclePolicy}'"""
+          }
           try {
             errorMsg = sh(returnStdout: true, script: "aws ecr create-repository --region us-east-1 --repository-name kypseli/${repoName} | tr -d '\n'")
           } catch(e) {
