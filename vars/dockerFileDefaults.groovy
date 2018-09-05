@@ -27,7 +27,7 @@ def call(body) {
           def errorMsg
           if(enableLifecyclePolicy) {
             def lifecyclePolicy = libraryResource 'aws/ecr/lifecycle-policy/tempImagePolicy.json'
-              lifecyclePolicy.replace('${tag}',"${tag}")
+            lifecyclePolicy = lifecyclePolicy.replace('${tag}',"${tag}")
             sh """aws ecr put-lifecycle-policy --region us-east-1 --repository-name kypseli/${repoName} --lifecycle-policy-text '$lifecyclePolicy'"""
           }
           try {
