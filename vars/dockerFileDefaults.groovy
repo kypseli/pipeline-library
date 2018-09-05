@@ -3,7 +3,7 @@ def call(body) {
     def repoName
     def tag
     def pushBranch
-    def enableLifecyclePolicy
+    def enableLifecyclePolicy = true
     
     tokens = "${env.JOB_NAME}".tokenize('/')
     repo = tokens[tokens.size()-2]
