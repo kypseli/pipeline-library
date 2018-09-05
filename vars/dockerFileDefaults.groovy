@@ -19,8 +19,9 @@ def call(body) {
         repoName = props['repo']
         tag = props['tag']
         pushBranch = props['pushBranch']
-        enableLifecyclePolicy = props['enableLifecyclePolicy']
         echo "push non master branch: $pushBranch"
+        enableLifecyclePolicy = props['enableLifecyclePolicy']
+        echo "enableLifecyclePolicy: $enableLifecyclePolicy"
         stash name: 'everything', includes: '**'
         stage 'Check Repository'
         container('aws-cli') {
