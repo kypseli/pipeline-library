@@ -2,11 +2,11 @@
     "rules": [
         {
             "rulePriority": 1,
-            "description": "Expire all untagged images",
+            "description": "Expire all but one untagged images",
             "selection": {
                 "tagStatus": "untagged",
                 "countType": "imageCountMoreThan",
-                "countNumber": 0
+                "countNumber": 1
             },
             "action": {
                 "type": "expire"
