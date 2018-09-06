@@ -2,18 +2,6 @@
     "rules": [
         {
             "rulePriority": 1,
-            "description": "Max of 5 total images",
-            "selection": {
-                "tagStatus": "any",
-                "countType": "imageCountMoreThan",
-                "countNumber": 5
-            },
-            "action": {
-                "type": "expire"
-            }
-        },
-        {
-            "rulePriority": 2,
             "description": "Expire all untagged older than 1 day",
             "selection": {
                 "tagStatus": "untagged",
@@ -26,12 +14,24 @@
             }
         },
         {
-            "rulePriority": 3,
+            "rulePriority": 2,
             "description": "Allow only a max of 1 untagged image",
             "selection": {
                 "tagStatus": "untagged",
                 "countType": "imageCountMoreThan",
                 "countNumber": 1
+            },
+            "action": {
+                "type": "expire"
+            }
+        },
+        {
+            "rulePriority": 3,
+            "description": "Max of 5 total images",
+            "selection": {
+                "tagStatus": "any",
+                "countType": "imageCountMoreThan",
+                "countNumber": 5
             },
             "action": {
                 "type": "expire"
