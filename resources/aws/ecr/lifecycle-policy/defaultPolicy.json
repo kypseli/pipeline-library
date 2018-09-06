@@ -2,7 +2,7 @@
     "rules": [
         {
             "rulePriority": 1,
-            "description": "Rule 1",
+            "description": "Max of 5 total images",
             "selection": {
                 "tagStatus": "any",
                 "countType": "imageCountMoreThan",
@@ -14,11 +14,23 @@
         },
         {
             "rulePriority": 2,
-            "description": "Rule 2",
+            "description": "Expire all untagged older than 1 day",
             "selection": {
                 "tagStatus": "untagged",
                 "countType": "sinceImagePushed",
-                "countUnit": "hours",
+                "countUnit": "days",
+                "countNumber": 1
+            },
+            "action": {
+                "type": "expire"
+            }
+        },
+        {
+            "rulePriority": 3,
+            "description": "Allow only a max of 1 untagged image",
+            "selection": {
+                "tagStatus": "untagged",
+                "countType": "imageCountMoreThan",
                 "countNumber": 1
             },
             "action": {
