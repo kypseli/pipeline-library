@@ -26,11 +26,13 @@ def call(body) {
         stage 'Check Repository'
         container('aws-cli') {
           def errorMsg
+          def lifecyclePolicy
           if(enableLifecyclePolicy.toBoolean()) {
-            def lifecyclePolicy = libraryResource 'aws/ecr/lifecycle-policy/tempImagePolicy.json'
-            lifecyclePolicy = lifecyclePolicy.replace('${tag}',"${tag}")
-            sh """aws ecr put-lifecycle-policy --region us-east-1 --repository-name kypseli/${repoName} --lifecycle-policy-text '$lifecyclePolicy'"""
+            lifecyclePolicy = libraryResource 'aws/ecr/lifecycle-policy/tempImagePolicy.json'
+          } else {
+            lifecyclePolicy = libraryResource 'aws/ecr/lifecycle-policy/defaultPolicy.json'
           }
+          sh """aws ecr put-lifecycle-policy --region us-east-1 --repository-name kypseli/${repoName} --lifecycle-policy-text '$lifecyclePolicy'"""
           try {
             errorMsg = sh(returnStdout: true, script: "aws ecr create-repository --region us-east-1 --repository-name kypseli/${repoName} | tr -d '\n'")
           } catch(e) {
