@@ -2,12 +2,12 @@
     "rules": [
         {
             "rulePriority": 1,
-            "description": "Expire images older than 1 hour",
+            "description": "Expire all images older than 4 hours",
             "selection": {
                 "tagStatus": "any",
                 "countType": "sinceImagePushed",
                 "countUnit": "hours",
-                "countNumber": 0
+                "countNumber": 4
             },
             "action": {
                 "type": "expire"
