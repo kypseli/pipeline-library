@@ -2,12 +2,11 @@
     "rules": [
         {
             "rulePriority": 1,
-            "description": "Expire all images older than 1 day",
+            "description": "Expire all untagged images",
             "selection": {
-                "tagStatus": "any",
-                "countType": "sinceImagePushed",
-                "countUnit": "days",
-                "countNumber": 1
+                "tagStatus": "untagged",
+                "countType": "imageCountMoreThan",
+                "countNumber": 0
             },
             "action": {
                 "type": "expire"
@@ -15,10 +14,11 @@
         },
         {
             "rulePriority": 2,
-            "description": "Keep only one image, expire all others",
+            "description": "Expire all images older than 1 day",
             "selection": {
                 "tagStatus": "any",
-                "countType": "imageCountMoreThan",
+                "countType": "sinceImagePushed",
+                "countUnit": "days",
                 "countNumber": 1
             },
             "action": {
