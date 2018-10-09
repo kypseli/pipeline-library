@@ -22,7 +22,7 @@ def call(body) {
         echo "push non master branch: $pushBranch"
         enableLifecyclePolicy = props['enableLifecyclePolicy']
         echo "enableLifecyclePolicy: $enableLifecyclePolicy"
-        stash name: 'everything', includes: '**'
+        //stash name: 'everything', includes: '**'
         stage 'Check Repository'
         container('aws-cli') {
           def errorMsg
@@ -50,7 +50,8 @@ def call(body) {
     if(env.BRANCH_NAME=="master" || pushBranch) {
       stage 'Image Build and Push'
       dockerBuildPush("${repoName}", "${tag}",'./') {
-        unstash 'everything'
+        //unstash 'everything'
+        checkout scm
       }
     }
 }
