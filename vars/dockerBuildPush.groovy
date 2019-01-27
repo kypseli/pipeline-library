@@ -8,7 +8,7 @@ def call(String name, String tag, String target = ".", String dockerFile="Docker
           body()
           withEnv(['PATH+EXTRA=/busybox:/kaniko']) {
             sh """#!/busybox/sh
-              executor -f ${pwd()}/${dockerFile} -c ${pwd()} -d ${dockerRepo}${name}:${tag} -d ${dockerRepo}${name}:latest
+              executor --cache=true -f ${pwd()}/${dockerFile} -c ${pwd()} -d ${dockerRepo}${name}:${tag} -d ${dockerRepo}${name}:latest
             """
           }
         }
