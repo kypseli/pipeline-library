@@ -7,11 +7,7 @@ def call(String name, String team='default') {
       node('mvn') {
         checkout scm
         container("maven") {
-          try {
-            sh "mvn -o package"
-          } catch(error) {
-            echo "failed dependencies"
-          }
+          sh "mvn -o package"
         }
       }
     }
