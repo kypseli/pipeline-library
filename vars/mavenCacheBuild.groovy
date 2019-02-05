@@ -3,6 +3,7 @@ def call(String name, String team='default') {
   def podYaml = libraryResource 'podtemplates/mvnCache.yml'
   podTemplate(name: 'mvn-cache', label: label, namespace: 'jenkins-agents',  yaml: podYaml) {
     node(label) {
+      checkout scm
       container("maven") {
         sh "mvn dependency:resolve"
       }
