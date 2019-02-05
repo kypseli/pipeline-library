@@ -7,7 +7,7 @@ def call(String name, String team='default') {
       node('mvn') {
         checkout scm
         container("maven") {
-          sh "mvn -o package"
+          sh "mvn -o package -Dmaven.test.skip=true"
         }
       }
     }
@@ -16,7 +16,7 @@ def call(String name, String team='default') {
       node(label) {
         checkout scm
         container("maven") {
-          sh "mvn package"
+          sh "mvn package -Dmaven.test.skip=true"
         }
       }
     }
