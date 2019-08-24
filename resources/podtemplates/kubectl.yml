@@ -2,13 +2,13 @@
   metadata:
     name: kubectl
   spec:
-    serviceAccountName: default
+    serviceAccountName: core-bot
     containers:
     - name: kubectl
       image: gcr.io/cloud-builders/kubectl
       resources:
         requests:
-          memory: "1Gi"
+          memory: "500Mi"
         limits:
           memory: "2Gi"
       command:
