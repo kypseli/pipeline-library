@@ -2,7 +2,7 @@
   metadata:
     name: kubectl
   spec:
-    serviceAccountName: cjoc
+    serviceAccountName: default
     containers:
     - name: kubectl
       image: gcr.io/cloud-builders/kubectl
