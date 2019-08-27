@@ -14,5 +14,5 @@
       command:
       - cat
       tty: true
-  securityContext:
-    runAsUser: 1000
+    securityContext:
+      runAsUser: 1000
